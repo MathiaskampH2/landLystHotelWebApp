@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 
 namespace landLystHotelWebApp
 {
+
     public class ServerManager
     {
         private static readonly string Con = DbConnection.Connection();
@@ -215,7 +216,7 @@ namespace landLystHotelWebApp
                     rdr = sql.ExecuteReader();
                     while (rdr.Read())
                     {
-                        decimal totalPrice = (decimal)rdr["totalprice"];
+                        decimal totalPrice = (decimal)rdr["totalPrice"];
                         TotalPrices totalPrices = new TotalPrices(totalPrice);
 
                         prices.Add(totalPrices);
@@ -239,5 +240,43 @@ namespace landLystHotelWebApp
             decimal price = Convert.ToDecimal(prices[0].TotalPrice.ToString());
             return price;
         }
+
+
+        public static List<RoomAndFeatures> GetRoomsAvaiableBasedOnFeatures(DateTime checkInDate, DateTime checkOutDate)
+        {
+            List<RoomAndFeatures> roomAndFeatures = new List<RoomAndFeatures>();
+
+            using (SqlConnection connection = new SqlConnection(Con))
+
+            {
+                try
+                {
+                    connection.Open();
+
+                    SqlCommand sql = new SqlCommand
+                    ("" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "" +
+                                                    "",connection);
+
+                }
+                finally
+                {
+                }
+            }
+        }
+
     }
 }
