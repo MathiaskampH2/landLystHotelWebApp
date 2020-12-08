@@ -25,5 +25,10 @@ namespace landLystHotelWebApp
         {
             return ServerManager.CreateReservation(custPhoneNumber, roomNumber, checkInDate, CheckOutDate);
         }
+
+        public static List<RoomAndFeatures> GetRoomsAvailableBasedOnFeatures(DateTime checkInDate, DateTime checkOutDate)
+        {
+            return ServerManager.GetRoomsAvailableBasedOnFeatures(checkInDate, checkOutDate);
+        }
     }
 }

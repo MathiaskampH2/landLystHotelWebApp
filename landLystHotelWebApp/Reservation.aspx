@@ -1,18 +1,20 @@
 ﻿<%@ Page Title="Reservation" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Reservation.aspx.cs" Inherits="landLystHotelWebApp.About" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="fonts/Reservation.css"/>
- <div id="CustomerInformation" style="position: relative; left: 0px;">
+    <div id="CustomerInformation" style="position: relative; left: 0px;">
         <h1 id="customerHeadline">Customer information</h1>
         <div id="firstNameLastName" style="position: relative; left: 0px;">
             <table style="width: 350px;">
                 <tr>
                     <th id="fNameID" style="width: 150px">First name</th>
+
                     <th id="lNameID" style="width: 150px">Last name</th>
                 </tr>
                 <tr>
                     <td id="fNameBoxID" style="width: 150px;">
                         <asp:TextBox ID="fNameBox" runat="server"></asp:TextBox>
                     </td>
+
                     <td id="lNameBoxID" style="width: 150px">
                         <asp:TextBox ID="lNameBox" runat="server"></asp:TextBox>
                     </td>
@@ -60,7 +62,7 @@
             </tr>
         </table>
     </div>
-    <div id="reservationInformation" style="position: relative; left: 0px;">
+    <div id="reservationInformation" style="position: relative; left: 0px; top: 0px; height: 210px;">
         <h1 id="reservationHeadline">Reservation information</h1><br/>
         <h3 id="roomFeaturesHeadline">Room features</h3>
         <p id="breadTextRoomServation">
@@ -68,8 +70,8 @@
             Below you see some room features that you can select<br/>
             the selected room features price will be added to the default price of the room.<br/>
         </p><br/>
-        <div id="roomFeaturesID" style="position: relative; left: 0px;">
-            <table id="roomFeaturesTableID" style="width: 350px;">
+        <div id="roomFeaturesAndDatesID" style="position: relative; top: 0px; left: 0px; height: 355px;">
+            <table id="roomFeaturesTableID" style="width: 30%; float: left; height: 355px">
                 <tr>
                     <th id="roomFeatureColumnID" style="width: 100px">Room feature</th>
                     <th id="roomFeatureChekboxID" style="width: 50px"></th>
@@ -94,7 +96,7 @@
                     </td>
                 </tr>
                 <tr id="bathtopRow">
-                    <td id="bathtopLabelID" style="width: 100px;">Bathtop</td>
+                    <td id="bathtopLabelID" style="width: 100px;">Bathtub</td>
                     <td id="bathtopCheckBoxID" style="width: 50px;">
                         <asp:CheckBox ID="bathtopCheckbox" runat="server"/>
                     </td>
@@ -121,7 +123,7 @@
                     </td>
                 </tr>
                 <tr id="twoSingleBedsnRow">
-                    <td id="twoSingleBedsLabelID" style="width: 100px;">Kitchen</td>
+                    <td id="twoSingleBedsLabelID" style="width: 100px;">Two single beds</td>
                     <td id="twoSIngleBedsCheckBoxID" style="width: 50px;">
                         <asp:CheckBox ID="twoSingleBedsCheckbox" runat="server"/>
                     </td>
@@ -130,7 +132,7 @@
                     </td>
                 </tr>
                 <tr id="oneSingleBedsnRow">
-                    <td id="oneSingleBedsLabelID" style="width: 100px;">Kitchen</td>
+                    <td id="oneSingleBedsLabelID" style="width: 100px;">One single bed</td>
                     <td id="oneSIngleBedsCheckBoxID" style="width: 50px;">
                         <asp:CheckBox ID="oneSingleBedsCheckbox" runat="server"/>
                     </td>
@@ -139,32 +141,50 @@
                     </td>
                 </tr>
             </table>
-        </div><br/>
-        <div id="calenderCheckInCheckOut" style="position: relative; left: 5px; top: 12px;">
-            <table id="calenderTableID">
-                <tr id="CalenderTableColumns">
-                <th id="calenderCheckIn" style="width: 300px">check in date</th>
-                <th id="calenderCheckOut" style="width: 300px">check out date</th>
+            <div id="calenderCheckInCheckOut" style="width: 500px; height: 355px; float: left" >
+                <table id="calenderTableID">
+                    <tr id="CalenderTableColumns">
+                        <th id="calenderCheckIn" style="width: 300px;">check in date</th>
+                        <th id="calenderCheckOut" style="width: 300px;">check out date</th>
+                    </tr>
+                    <tr id="calenders">
+                        <td id="calenderTableCheckInDate">
+                            <asp:Calendar ID="CalenderCheckInDate" runat="server"></asp:Calendar><br/>
+                        </td>
+                        <td id="calenderTableCheckOutDate">
+                            <asp:Calendar ID="CalenderCheckOutDate" runat="server"></asp:Calendar><br/>
+                        </td>
+                    </tr>
+                </table>
+            </div><br/>
+        </div>
+        <div id="seachRoom">
+            <table id="searchForAvailableRoomTableID" style="float: left;">
+                <tr id="searchTableRow">
+                    <th id="checkInDateColumn" style="width: 150px">Check in date</th>
+                    <th id="checkOutDateColumn" style="width: 150px">Check out date</th>
                 </tr>
-                <tr id="calenders">
-                    <td id="calenderTableCheckInDate">
-                        <asp:Calendar ID="CalenderCheckInDate" runat="server" OnSelectionChanged="CalenderCheckInDate_SelectionChanged"></asp:Calendar><br/>
-                    </td>
-                    <td id="calenderTableCheckOutDate">
-                        <asp:Calendar ID="CalenderCheckOutDate" runat="server" OnSelectionChanged="CalenderCheckOutDate_SelectionChanged"></asp:Calendar><br/>
-                    </td>
-                </tr>
-                <tr id="datesChosen">
-                    <td id="checkInDateChosenBoxID">
+                <tr>
+                    <td id="checkInDateChosen">
                         <asp:TextBox ID="CheckInDateChosenBox" runat="server"></asp:TextBox>
                     </td>
-                    <td id="checkOutDateChosenBoxID">
+                    <td id="checkOutDateChosen">
                         <asp:TextBox ID="CheckOutDateChosenBox" runat="server"></asp:TextBox>
                     </td>
                 </tr>
-                <tr id="ConfirmReservation">
-                    <td id="ConfirmReservationButtonID">
-                        <br/><asp:Button ID="ConfirmReservationButton" runat="server" Text="confirm reservation" />
+                <tr>
+                    <td>
+                        <asp:Button ID="searchForAvailableRoomButton" runat="server" Text="search" />
+                    </td>
+                </tr>
+            </table>
+            <table id="listOfRooms" style="float: left;">
+                <tr id="listOfRoomID">
+                    <th id="rooms" style="width: 150px"></th>
+                </tr>
+                <tr>
+                    <td>
+
                     </td>
                 </tr>
             </table>

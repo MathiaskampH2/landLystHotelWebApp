@@ -240,12 +240,12 @@ namespace landLystHotelWebApp
         protected global::System.Web.UI.WebControls.TextBox CheckOutDateChosenBox;
 
         /// <summary>
-        /// ConfirmReservationButton control.
+        /// searchForAvailableRoomButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ConfirmReservationButton;
+        protected global::System.Web.UI.WebControls.Button searchForAvailableRoomButton;
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace landLystHotelWebApp
 {
@@ -25,27 +21,30 @@ namespace landLystHotelWebApp
             HotelManager.CreateCustomer(custFName, custLName, custZipcode, custAddress, custPhoneNum, custEmail);
         }
 
-        protected void CalenderCheckInDate_SelectionChanged(object sender, EventArgs e)
-        {
-            CheckInDateChosenBox.Text = CalenderCheckInDate.SelectedDate.ToString("yyyy-MM-dd");
-        }
+        //protected void CalenderCheckInDate_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    CheckInDateChosenBox.Text = CalenderCheckInDate.SelectedDate.ToString("yyyy-MM-dd");
+        //}
 
-        protected void CalenderCheckOutDate_SelectionChanged(object sender, EventArgs e)
-        {
-            CheckOutDateChosenBox.Text = CalenderCheckOutDate.SelectedDate.Date.ToString("yyyy-MM-dd");
-        }
+        //protected void CalenderCheckOutDate_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    CheckOutDateChosenBox.Text = CalenderCheckOutDate.SelectedDate.Date.ToString("yyyy-MM-dd");
+        //}
 
-        protected void confirmReservation_Click1(object sender, EventArgs e)
-        {
-             string roomNum = "100";
-            string phoneNum = phoneNumberBox.Text;
-            int roomNumber = int.Parse(roomNum);
-            DateTime checkInDate = DateTime.Parse(CheckInDateChosenBox.Text);
-            DateTime checkOutDate = DateTime.Parse(CheckOutDateChosenBox.Text);
+     
+        //protected void ConfirmReservationButton_Click(object sender, EventArgs e)
+        //{
+        //    string phoneNum = phoneNumberBox.Text;
+        //    //int roomNumber = int.Parse(roomNum);
+        //    int roomNumber = 100;
+        //    DateTime checkInDate = DateTime.Parse(CheckInDateChosenBox.Text);
+        //    DateTime checkOutDate = DateTime.Parse(CheckOutDateChosenBox.Text);
 
 
-            HotelManager.CreateReservation(phoneNum, roomNumber, checkInDate, checkOutDate);
-        }
+        //    HotelManager.CreateReservation(phoneNum, roomNumber, checkInDate, checkOutDate);
+        //}
+
+
 
     }
 }
