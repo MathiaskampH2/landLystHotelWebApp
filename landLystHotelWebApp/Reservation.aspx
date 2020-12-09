@@ -149,7 +149,7 @@
                     </tr>
                     <tr id="calenders">
                         <td id="calenderTableCheckInDate">
-                            <asp:Calendar ID="CalenderCheckInDate" runat="server"></asp:Calendar><br/>
+                            <asp:Calendar ID="CalenderCheckInDate" runat="server" OnSelectionChanged="CalenderCheckInDate_SelectionChanged1"></asp:Calendar><br/>
                         </td>
                         <td id="calenderTableCheckOutDate">
                             <asp:Calendar ID="CalenderCheckOutDate" runat="server"></asp:Calendar><br/>

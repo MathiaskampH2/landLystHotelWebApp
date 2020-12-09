@@ -243,7 +243,8 @@ namespace landLystHotelWebApp
         }
 
 
-        public static List<RoomAndFeatures> GetRoomsAvailableBasedOnFeatures(DateTime checkInDate, DateTime checkOutDate)
+        public static List<RoomAndFeatures> GetRoomsAvailableBasedOnFeatures(DateTime checkInDate,
+            DateTime checkOutDate)
         {
             List<RoomAndFeatures> roomAndFeatures = new List<RoomAndFeatures>();
 
@@ -254,42 +255,23 @@ namespace landLystHotelWebApp
                 {
                     connection.Open();
 
-                    SqlCommand sql = new SqlCommand("DECLARE @RoomFeatureRS TABLE (roomNum int)" +
-                                                         "DECLARE @roomNumberRs TABLE (roomNumber int,roomPrice decimal(19,4),featureDescription varchar(50),featurePrice decimal(19,4))" +
-                                                         "insert into @roomNumberRs" +
-                                                         "SELECT room.roomNumber,Room.price as roomPrice, fe.description, fe.price as featurePrice" +
-                                                         "FROM Room INNER JOIN roomFeatures rf" +
-                                                         " ON rf.roomNumber = Room.roomNumber INNER JOIN Features fe" +
-                                                         " ON rf.featureNumber = fe.featureNumber" +
-                                                         "WHERE Room.roomNumber" +
-                                                         $"NOT IN(SELECT reservation.roomNumber FROM reservation WHERE checkInDate <= '{checkInDate}' AND checkOutDate >= '{checkOutDate}')" +
-                                                         "insert into @roomFeatureRs" +
-                                                         "SELECT roomNumber  FROM @roomNumberRs WHERE featureDescription = 'double bed'" +
-                                                         "SELECT roomNum, r.price as roomPrice ,fe.description as featureDescription,fe.price AS featurePrice" +
-                                                         "FROM @RoomFeatureRS" +
-                                                         "INNER JOIN Room r" +
-                                                         "ON r.roomNumber = roomNum" +
-                                                         "INNER JOIN roomFeatures rf" +
-                                                         "ON rf.roomNumber = roomNum" +
-                                                         "INNER JOIN Features fe" +
-                                                         "ON fe.featureNumber = rf.featureNumber");
+                    SqlCommand sql = new SqlCommand(
+                        "DECLARE @RoomFeatureRS TABLE (roomNum int) DECLARE @roomNumberRs TABLE (roomNumber int,roomPrice decimal(19,4),featureDescription varchar(50),featurePrice decimal(19,4)) insert into @roomNumberRs SELECT room.roomNumber,Room.price as roomPrice, fe.description, fe.price as featurePrice FROM Room INNER JOIN roomFeatures rf  ON rf.roomNumber = Room.roomNumber INNER JOIN Features fe  ON rf.featureNumber = fe.featureNumber WHERE Room.roomNumber NOT IN(SELECT reservation.roomNumber FROM reservation WHERE checkInDate <= '2020-12-03' AND checkOutDate >= '2020-12-10') insert into @roomFeatureRs SELECT roomNumber  FROM @roomNumberRs WHERE featureDescription = 'double bed' SELECT roomNum, r.price as roomPrice ,fe.description as featureDescription,fe.price AS featurePrice FROM @RoomFeatureRS INNER JOIN Room r ON r.roomNumber = roomNum INNER JOIN roomFeatures rf ON rf.roomNumber = roomNum INNER JOIN Features fe ON fe.featureNumber = rf.featureNumber");
 
 
                     rdr = sql.ExecuteReader();
                     while (rdr.Read())
                     {
-                        int roomNumber = (int)rdr["roomNum"];
-                        decimal roomPrice = (decimal)rdr["roomPrice"];
-                        string description = (string)rdr["featureDescription"];
-                        decimal featurePrice = (decimal)rdr["featurePrice"];
-                     
-                        RoomAndFeatures roomNdFeatures = new RoomAndFeatures(roomNumber, roomPrice, description, featurePrice);
+                        int roomNumber = (int) rdr["roomNum"];
+                        decimal roomPrice = (decimal) rdr["roomPrice"];
+                        string description = (string) rdr["featureDescription"];
+                        decimal featurePrice = (decimal) rdr["featurePrice"];
+
+                        RoomAndFeatures roomNdFeatures =
+                            new RoomAndFeatures(roomNumber, roomPrice, description, featurePrice);
 
                         roomAndFeatures.Add(roomNdFeatures);
-                        
                     }
-
-
                 }
                 finally
                 {
