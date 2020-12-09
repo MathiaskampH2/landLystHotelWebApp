@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using Dapper;
 
 namespace landLystHotelWebApp
 {
@@ -12,88 +14,42 @@ namespace landLystHotelWebApp
 
         private static SqlDataReader rdr = null;
 
-        public static List<Room> GetAllRooms()
-        {
-            List<Room> rooms = new List<Room>();
+        //public static List<Features> GetRoomFeatures(int roomNumber)
+        //{
+        //    List<Features> features = new List<Features>();
 
-            using (SqlConnection connection = new SqlConnection(Con))
+        //    using (SqlConnection connection = new SqlConnection(Con))
 
-            {
-                try
-                {
-                    connection.Open();
+        //    {
+        //        try
+        //        {
+        //            connection.Open();
 
-                    SqlCommand sql = new SqlCommand("select * from room", connection);
-                    rdr = sql.ExecuteReader();
+        //            SqlCommand sql = new SqlCommand("sp_GetRoomFeatures", connection)
+        //            {
+        //                CommandType = CommandType.StoredProcedure
+        //            };
 
-                    while (rdr.Read())
-                    {
-                        int roomNumber = (int) rdr["RoomNumber"];
+        //            sql.Parameters.Add(new SqlParameter("@roomNumber", roomNumber));
+        //            rdr = sql.ExecuteReader();
+        //            while (rdr.Read())
+        //            {
+        //                string description = (string) rdr["description"];
 
-                        int hotelNumber = (int) rdr["hotelNumber"];
+        //                Features feature = new Features(description);
+        //                features.Add(feature);
+        //            }
+        //        }
+        //        finally
+        //        {
+        //            connection?.Close();
 
-                        byte floorLevel = Convert.ToByte(rdr["floorLevel"]);
+        //            rdr?.Close();
+        //        }
+        //    }
 
-                        decimal price = (decimal) rdr["price"];
-
-                        byte reserved = Convert.ToByte(rdr["reserved"]);
-
-                        string condition = (string) rdr["condition"];
-
-                        Room r = new Room(roomNumber, hotelNumber, floorLevel, price, reserved, condition);
-
-                        rooms.Add(r);
-                    }
-                }
-
-                finally
-                {
-                    connection?.Close();
-
-                    rdr?.Close();
-                }
-            }
-
-            return rooms;
-        }
-
-
-        public static List<Features> GetRoomFeatures(int roomNumber)
-        {
-            List<Features> features = new List<Features>();
-
-            using (SqlConnection connection = new SqlConnection(Con))
-
-            {
-                try
-                {
-                    connection.Open();
-
-                    SqlCommand sql = new SqlCommand("sp_GetRoomFeatures", connection)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-
-                    sql.Parameters.Add(new SqlParameter("@roomNumber", roomNumber));
-                    rdr = sql.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        string description = (string) rdr["description"];
-
-                        Features feature = new Features(description);
-                        features.Add(feature);
-                    }
-                }
-                finally
-                {
-                    connection?.Close();
-
-                    rdr?.Close();
-                }
-            }
-
-            return features;
-        }
+        //    return features;
+        //}
 
 
         public static List<Customer> CreateCustomer(string fName, string lName, int zipCode, string address,
@@ -243,45 +199,52 @@ namespace landLystHotelWebApp
         }
 
 
-        public static List<RoomAndFeatures> GetRoomsAvailableBasedOnFeatures(DateTime checkInDate,
-            DateTime checkOutDate)
+        public static List<Room> GetRoomsAvailableBasedOnFeatures(DateTime checkInDate,
+             DateTime checkOutDate)
         {
-            List<RoomAndFeatures> roomAndFeatures = new List<RoomAndFeatures>();
+            string dateIn = checkInDate.ToString("yyyy-MM-dd");
+            string dateOut = checkOutDate.ToString("yyyy-MM-dd");
 
             using (SqlConnection connection = new SqlConnection(Con))
 
             {
-                try
-                {
-                    connection.Open();
+                connection.Open();
 
-                    SqlCommand sql = new SqlCommand(
-                        "DECLARE @RoomFeatureRS TABLE (roomNum int) DECLARE @roomNumberRs TABLE (roomNumber int,roomPrice decimal(19,4),featureDescription varchar(50),featurePrice decimal(19,4)) insert into @roomNumberRs SELECT room.roomNumber,Room.price as roomPrice, fe.description, fe.price as featurePrice FROM Room INNER JOIN roomFeatures rf  ON rf.roomNumber = Room.roomNumber INNER JOIN Features fe  ON rf.featureNumber = fe.featureNumber WHERE Room.roomNumber NOT IN(SELECT reservation.roomNumber FROM reservation WHERE checkInDate <= '2020-12-03' AND checkOutDate >= '2020-12-10') insert into @roomFeatureRs SELECT roomNumber  FROM @roomNumberRs WHERE featureDescription = 'double bed' SELECT roomNum, r.price as roomPrice ,fe.description as featureDescription,fe.price AS featurePrice FROM @RoomFeatureRS INNER JOIN Room r ON r.roomNumber = roomNum INNER JOIN roomFeatures rf ON rf.roomNumber = roomNum INNER JOIN Features fe ON fe.featureNumber = rf.featureNumber");
+                string sql = $@"DECLARE @RoomFeatureRS TABLE (roomNum int)
+                                DECLARE @roomNumberRs TABLE (roomNumber int,roomPrice decimal(19,4),featureDescription varchar(50),featurePrice decimal(19,4))
+                                insert into @roomNumberRs
+                                SELECT room.roomNumber,Room.price as roomPrice, fe.description, fe.price as featurePrice FROM Room
+                                INNER JOIN roomFeatures rf  ON rf.roomNumber = Room.roomNumber
+                                INNER JOIN Features fe  ON rf.featureNumber = fe.featureNumber
+                                WHERE Room.roomNumber NOT IN(SELECT reservation.roomNumber FROM reservation WHERE checkInDate <= '{dateIn}' AND checkOutDate >= '{dateOut}')
+                                insert into @roomFeatureRs SELECT roomNumber  FROM @roomNumberRs WHERE featureDescription = 'double bed'
+                                SELECT roomNum, r.price as RoomPrice ,fe.description as FeatureDescription,fe.price AS featurePrice FROM @RoomFeatureRS
+                                INNER JOIN Room r ON r.roomNumber = roomNum
+                                INNER JOIN roomFeatures rf ON rf.roomNumber = roomNum
+                                INNER JOIN Features fe ON fe.featureNumber = rf.featureNumber";
 
+                var roomFeatureDictionary = new Dictionary<int, Room>();
+                var list = connection.Query<Room, Features, Room>(
+                        sql,
+                        (room, features) =>
+                        {
+                            Room roomEntry;
 
-                    rdr = sql.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        int roomNumber = (int) rdr["roomNum"];
-                        decimal roomPrice = (decimal) rdr["roomPrice"];
-                        string description = (string) rdr["featureDescription"];
-                        decimal featurePrice = (decimal) rdr["featurePrice"];
+                            if (!roomFeatureDictionary.TryGetValue(room.RoomNum, out roomEntry))
+                            {
+                                roomEntry = room;
+                                roomEntry.roomFeatures = new List<Features>();
+                                roomFeatureDictionary.Add(roomEntry.RoomNum, roomEntry);
+                            }
 
-                        RoomAndFeatures roomNdFeatures =
-                            new RoomAndFeatures(roomNumber, roomPrice, description, featurePrice);
-
-                        roomAndFeatures.Add(roomNdFeatures);
-                    }
-                }
-                finally
-                {
-                    connection?.Close();
-
-                    rdr?.Close();
-                }
+                            roomEntry.roomFeatures.Add(features);
+                            return roomEntry;
+                        },
+                        splitOn: "FeatureDescription")
+                    .Distinct()
+                    .ToList();
+                return list;
             }
-
-            return roomAndFeatures;
         }
     }
 }

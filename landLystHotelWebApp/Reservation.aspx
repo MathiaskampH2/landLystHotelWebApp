@@ -141,7 +141,7 @@
                     </td>
                 </tr>
             </table>
-            <div id="calenderCheckInCheckOut" style="width: 500px; height: 355px; float: left" >
+            <div id="calenderCheckInCheckOut" style="width: 500px; height: 355px; float: left">
                 <table id="calenderTableID">
                     <tr id="CalenderTableColumns">
                         <th id="calenderCheckIn" style="width: 300px;">check in date</th>
@@ -149,45 +149,40 @@
                     </tr>
                     <tr id="calenders">
                         <td id="calenderTableCheckInDate">
-                            <asp:Calendar ID="CalenderCheckInDate" runat="server" OnSelectionChanged="CalenderCheckInDate_SelectionChanged1"></asp:Calendar><br/>
+                            <asp:Calendar ID="CalenderCheckInDate" runat="server" OnSelectionChanged="CalenderCheckInDate_SelectionChanged"></asp:Calendar><br/>
                         </td>
                         <td id="calenderTableCheckOutDate">
-                            <asp:Calendar ID="CalenderCheckOutDate" runat="server"></asp:Calendar><br/>
+                            <asp:Calendar ID="CalenderCheckOutDate" runat="server" OnSelectionChanged="CalenderCheckOutDate_SelectionChanged"></asp:Calendar><br/>
                         </td>
                     </tr>
                 </table>
             </div><br/>
         </div>
-        <div id="seachRoom">
-            <table id="searchForAvailableRoomTableID" style="float: left;">
-                <tr id="searchTableRow">
-                    <th id="checkInDateColumn" style="width: 150px">Check in date</th>
-                    <th id="checkOutDateColumn" style="width: 150px">Check out date</th>
-                </tr>
+        <div id="SearchTable" style="float: left">
+            <table id="searchForRoom" style="float : left;">
+                <th id="CheckIndate"> Check in date</th>
+                <th id="checkOutDate"> Check out date</th>
                 <tr>
-                    <td id="checkInDateChosen">
+                    <td id="checkInDateChosenID">
                         <asp:TextBox ID="CheckInDateChosenBox" runat="server"></asp:TextBox>
                     </td>
-                    <td id="checkOutDateChosen">
+                    <td id="checkOutDateChosenID">
                         <asp:TextBox ID="CheckOutDateChosenBox" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:Button ID="searchForAvailableRoomButton" runat="server" Text="search" />
+                        <asp:Button ID="searchRoom" runat="server" Text="search" OnClick="searchRoom_Click"/>
                     </td>
                 </tr>
             </table>
-            <table id="listOfRooms" style="float: left;">
-                <tr id="listOfRoomID">
-                    <th id="rooms" style="width: 150px"></th>
-                </tr>
-                <tr>
-                    <td>
-
-                    </td>
-                </tr>
-            </table>
+        </div>
+        <div id="listOfRooms" style="float: left">
+            <asp:gridView runat="server" AutoGenerateColumns="False" ID="GridWithRooms">
+                <Columns>
+                    <asp:BoundField DataField="RoomNum" HeaderText="RoomNum"/>
+                </Columns>
+            </asp:gridView>
         </div>
     </div>
 </asp:Content>

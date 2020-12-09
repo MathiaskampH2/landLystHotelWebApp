@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace landLystHotelWebApp
 {
@@ -7,6 +9,7 @@ namespace landLystHotelWebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
         }
 
         protected void CreateCustomerButID_Click(object sender, EventArgs e)
@@ -21,16 +24,7 @@ namespace landLystHotelWebApp
             HotelManager.CreateCustomer(custFName, custLName, custZipcode, custAddress, custPhoneNum, custEmail);
         }
 
-        protected void CalenderCheckInDate_SelectionChanged(object sender, EventArgs e)
-        {
-            CheckInDateChosenBox.Text = CalenderCheckInDate.SelectedDate.ToString("yyyy-MM-dd");
-        }
-
-        protected void CalenderCheckOutDate_SelectionChanged(object sender, EventArgs e)
-        {
-            CheckOutDateChosenBox.Text = CalenderCheckOutDate.SelectedDate.ToString("yyyy-MM-dd");
-        }
-
+     
 
         protected void ConfirmReservationButton_Click(object sender, EventArgs e)
         {
@@ -44,5 +38,25 @@ namespace landLystHotelWebApp
             HotelManager.CreateReservation(phoneNum, roomNumber, checkInDate, checkOutDate);
         }
 
+        protected void CalenderCheckInDate_SelectionChanged(object sender, EventArgs e)
+        {
+            CheckInDateChosenBox.Text = CalenderCheckInDate.SelectedDate.ToString("yyyy-MM-dd");
+        }
+
+        protected void CalenderCheckOutDate_SelectionChanged(object sender, EventArgs e)
+        {
+            CheckOutDateChosenBox.Text = CalenderCheckOutDate.SelectedDate.ToString("yyyy-MM-dd");
+        }
+
+        protected void searchRoom_Click(object sender, EventArgs e)
+        {
+            DateTime checkInDate = DateTime.Parse(CheckInDateChosenBox.Text);
+            DateTime checkOutDate = DateTime.Parse(CheckOutDateChosenBox.Text);
+
+            List<Room> rooms = HotelManager.GetRoomsAvailableBasedOnFeatures(checkInDate, checkOutDate);
+
+            GridWithRooms.DataSource = rooms;
+            GridWithRooms.DataBind();
+        }
     }
 }

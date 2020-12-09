@@ -3,11 +3,9 @@
    
     public class Features
     {
-        public string Description { get; set; }
+        public string featureDescription { get; set; }
 
-        public Features(string description)
-        {
-            this.Description = description;
-        }
+        public decimal FeaturePrice { get; set; }
+
     }
 }

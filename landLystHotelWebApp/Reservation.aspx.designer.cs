@@ -240,12 +240,21 @@ namespace landLystHotelWebApp
         protected global::System.Web.UI.WebControls.TextBox CheckOutDateChosenBox;
 
         /// <summary>
-        /// searchForAvailableRoomButton control.
+        /// searchRoom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button searchForAvailableRoomButton;
+        protected global::System.Web.UI.WebControls.Button searchRoom;
+
+        /// <summary>
+        /// GridWithRooms control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridWithRooms;
     }
 }
