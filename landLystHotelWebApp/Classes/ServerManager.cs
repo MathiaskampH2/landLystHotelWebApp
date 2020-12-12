@@ -9,13 +9,19 @@ using Microsoft.Ajax.Utilities;
 
 namespace landLystHotelWebApp
 {
+    /// <summary>
+    /// Class ServerManager
+    /// handles all methods and connections to the database
+    /// </summary>
     public class ServerManager
     {
+        // private variable of Con that all my methods can use
         private static readonly string Con = DbConnection.Connection();
 
+        // private variable of sqlDataReader that all my methods can use
         private static SqlDataReader rdr = null;
 
-
+        // method Features returns a list of all features with their description and price
         public static List<Features> GetFeaturePrice()
         {
             List<Features> features = new List<Features>();
@@ -52,7 +58,17 @@ namespace landLystHotelWebApp
             }
         }
 
-
+        /// <summary>
+        /// CreateCustomer
+        /// Calls a stored procedure called sp_insertCustomer that inserts the customer into customer table
+        /// </summary>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="zipCode"></param>
+        /// <param name="address"></param>
+        /// <param name="phoneNumber"></param>
+        /// <param name="email"></param>
+        /// <returns>customers</returns>
         public static List<Customer> CreateCustomer(string fName, string lName, int zipCode, string address,
             string phoneNumber, string email)
         {
@@ -101,7 +117,13 @@ namespace landLystHotelWebApp
 
             return customers;
         }
-        public static decimal ConvertTotalPRiceToDecimal(int roomNumber)
+        /// <summary>
+        /// ConvertTotalPriceToDecimal
+        /// takes the totalPrice from a list and converts it to a decimal value
+        /// </summary>
+        /// <param name="roomNumber"></param>
+        /// <returns>price</returns>
+        public static decimal ConvertTotalPriceToDecimal(int roomNumber)
         {
             List<TotalPrices> prices = TotalPrice(roomNumber);
 
@@ -109,10 +131,19 @@ namespace landLystHotelWebApp
             return price;
         }
 
+        /// <summary>
+        /// CalculatePriceWithTenPercentageDiscount
+        /// takes its parameters and checks if the difference between CheckInDate and CheckOutDate is >=7
+        /// then it will subtract 10% of the total cost price
+        /// </summary>
+        /// <param name="roomNumber"></param>
+        /// <param name="checkInDate"></param>
+        /// <param name="checkOutDate"></param>
+        /// <returns>roomPrice</returns>
         public static decimal CalculatePriceWithTenPercentageDiscount(int roomNumber, DateTime checkInDate, DateTime checkOutDate)
         {
             int daysToStay = (checkOutDate - checkInDate).Days;
-            decimal totalRoomPrice = ConvertTotalPRiceToDecimal(roomNumber) * daysToStay;
+            decimal totalRoomPrice = ConvertTotalPriceToDecimal(roomNumber) * daysToStay;
 
             decimal roomPrice = 0;
 
@@ -131,6 +162,15 @@ namespace landLystHotelWebApp
             return roomPrice;
         }
 
+        /// <summary>
+        /// CreateReservation
+        /// Calls a stored procedure called sp_insertReservation that inserts the Reservation into Reservation table
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="roomNumber"></param>
+        /// <param name="checkInDate"></param>
+        /// <param name="checkoutDate"></param>
+        /// <returns>reservations</returns>
         public static List<Reservation> CreateReservation(string phoneNumber, int roomNumber, DateTime checkInDate, DateTime checkoutDate)
         {
             List<Reservation> reservations = new List<Reservation>();
@@ -165,8 +205,11 @@ namespace landLystHotelWebApp
                         DateTime resCheckInDate = (DateTime) rdr["checkInDate"];
                         DateTime resCheckOutDate = (DateTime) rdr["CheckOutDate"];
 
-                        Reservation reservation = new Reservation(resPhoneNumber, resRoomNumber, resCheckInDate,
-                            resCheckOutDate, daysToStay, totalPrice);
+                        Reservation reservation = new Reservation()
+                        {
+                            CustPhoneNumber = resPhoneNumber, RoomNumber = resRoomNumber, CheckInDate = resCheckInDate,
+                            CheckOutDate = resCheckOutDate, DaysToStay = daysToStay, TotalPrice = totalPrice
+                        };
                         reservations.Add(reservation);
                     }
                 }
@@ -181,6 +224,12 @@ namespace landLystHotelWebApp
             return reservations;
         }
 
+        /// <summary>
+        /// TotalPrice
+        /// calls a method called sp_GetRoomPrice that gets the total roomPrice per night based on features and room price of that room.
+        /// </summary>
+        /// <param name="roomNumber"></param>
+        /// <returns>prices</returns>
         public static List<TotalPrices> TotalPrice(int roomNumber)
         {
             List<TotalPrices> prices = new List<TotalPrices>();
@@ -202,7 +251,7 @@ namespace landLystHotelWebApp
                     while (rdr.Read())
                     {
                         decimal totalPrice = (decimal) rdr["totalPrice"];
-                        TotalPrices totalPrices = new TotalPrices(totalPrice);
+                        TotalPrices totalPrices = new TotalPrices(){TotalPrice = totalPrice};
 
                         prices.Add(totalPrices);
                     }
@@ -218,7 +267,14 @@ namespace landLystHotelWebApp
             return prices;
         }
 
-        public static string searchRoomWithFeature(int feaNumber)
+        /// <summary>
+        /// SearchRoomWithFeature
+        /// is used by method GetRoomsAvailableBasedOnFeatures
+        /// this gives the method a string of room numbers based on what featureNumber the user choose on the website
+        /// </summary>
+        /// <param name="feaNumber"></param>
+        /// <returns></returns>
+        public static string SearchRoomWithFeature(int feaNumber)
         {
             string featureSql = null;
 
@@ -281,7 +337,15 @@ namespace landLystHotelWebApp
 
 
 
-
+        /// <summary>
+        /// GetRoomsAvailableBasedOnFeatures
+        /// i've used dapper in this method to map two global tables together.
+        /// but i couldn't get it to work properly. So i created SearchRoomWithFeature instead.
+        /// </summary>
+        /// <param name="checkInDate"></param>
+        /// <param name="checkOutDate"></param>
+        /// <param name="featureNumber"></param>
+        /// <returns>list of rooms</returns>
         public static List<Room> GetRoomsAvailableBasedOnFeatures(DateTime checkInDate,
              DateTime checkOutDate, int featureNumber)
         {
@@ -300,7 +364,7 @@ namespace landLystHotelWebApp
                                 INNER JOIN roomFeatures rf  ON rf.roomNumber = Room.roomNumber
                                 INNER JOIN Features fe  ON rf.featureNumber = fe.featureNumber
                                 WHERE Room.roomNumber NOT IN(SELECT reservation.roomNumber FROM reservation WHERE checkInDate <= '{dateIn}' AND checkOutDate >= '{dateOut}')
-                                insert into @roomFeatureRs SELECT roomNumber  FROM @roomNumberRs where {searchRoomWithFeature(featureNumber)}
+                                insert into @roomFeatureRs SELECT roomNumber  FROM @roomNumberRs where {SearchRoomWithFeature(featureNumber)}
                                 SELECT roomNum, r.price as RoomPrice ,fe.description as FeatureDescription,fe.price AS featurePrice FROM @RoomFeatureRS
                                 INNER JOIN Room r ON r.roomNumber = roomNum
                                 INNER JOIN roomFeatures rf ON rf.roomNumber = roomNum

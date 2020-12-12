@@ -45,12 +45,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Landlyst Hotel</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/Reservation.aspx">Reservation</a></li>
-                    </ul>
+                    <a class="navbar-brand" runat="server" href="~/">Landlyst-hotel Reservation</a>
                 </div>
             </div>
         </div>

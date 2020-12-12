@@ -2,6 +2,10 @@
 
 namespace landLystHotelWebApp
 {
+    /// <summary>
+    /// class Reservation
+    /// Is used to create an object of Reservation
+    /// </summary>
     public class Reservation
     {
         public string CustPhoneNumber { get; set; }
@@ -15,19 +19,5 @@ namespace landLystHotelWebApp
 
         public decimal TotalPrice { get; set; }
 
-        public Reservation(string custPhoneNumber, int roomNumber, DateTime checkInDate, DateTime checkOutDate)
-        {
-            this.CustPhoneNumber = custPhoneNumber;
-            this.RoomNumber = roomNumber;
-            this.CheckInDate = checkInDate;
-            this.CheckOutDate = checkOutDate;
-        }
-
-        public Reservation(string custPhoneNumber, int roomNumber, DateTime checkInDate, DateTime checkOutDate, int daysToStay, decimal totalPrice)
-            : this(custPhoneNumber, roomNumber, checkInDate, checkOutDate)
-        {
-            this.DaysToStay = daysToStay;
-            this.TotalPrice = totalPrice;
-        }
     }
 }

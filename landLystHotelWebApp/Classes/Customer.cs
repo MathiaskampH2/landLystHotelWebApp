@@ -1,5 +1,9 @@
 ﻿namespace landLystHotelWebApp
 {
+    /// <summary>
+    /// class customer
+    /// is used to create an object of customer
+    /// </summary>
     public class Customer
     {
         public string FName { get; set; }
