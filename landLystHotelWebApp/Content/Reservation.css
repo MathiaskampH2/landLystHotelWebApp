@@ -1,0 +1,105 @@
+﻿
+.CheckInAndOutTables td {
+    padding: 10px;
+}
+
+.CustomerInformation{
+
+    position: relative;
+    left: 0px;
+}
+
+.CustomerInformation h1 {
+    color: black;
+}
+
+.CustomerInformation{
+
+    position: relative;
+    left: 0px;
+}
+
+.CustomerInformation table {
+    position: relative;
+    border-spacing: 50px 0;
+}
+
+.CustomerInformation td,th {
+    padding: 10px;
+    width: 150px;
+    vertical-align: bottom;
+    
+}
+
+.ReservationInformation{
+    position: relative; 
+    left: 0px; 
+
+}
+
+.ReservationInformation p{
+    font-style: italic;
+}
+
+.RoomFeatures{
+    position: relative;
+}
+
+
+.RoomFeatures table {
+    position: relative;
+    border-spacing: 50px 0;
+}
+.RoomFeatures th, td {
+    padding: 10px;
+    width: 150px;
+    vertical-align: bottom;
+}
+
+
+.checkInDate{
+    
+    position: relative;
+}
+
+.checkInDate table {
+    position: relative;
+    border-spacing: 50px 0;
+    width: 30%;
+}
+
+.checkInDate th, td {
+    padding: 10px;
+}
+
+.CheckOutDate{
+    position: relative;
+}
+
+.CheckOutDate table {
+    position: relative;
+    border-spacing: 50px 0;
+    width: 30%;
+    top: 0px;
+    left: 0px;
+}
+
+.CheckOutDate th, td {
+    padding: 10px;
+}
+
+.SearchRoom table {
+    position: relative;
+  
+}
+
+.SearchRoom th, td {
+    width: 150px;
+}
+
+.SearchRoom {
+    position: relative;
+
+    
+}
+

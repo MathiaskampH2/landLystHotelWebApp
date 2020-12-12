@@ -18,7 +18,7 @@
 </head>
 <body>
     <form runat="server">
-        <asp:ScriptManager runat="server">
+        <asp:ScriptManager runat="server" ID="scriptManager1">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
@@ -45,13 +45,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">landlyst Hotel</a>
+                    <a class="navbar-brand" runat="server" href="~/">Landlyst Hotel</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/Reservation.aspx">Reservation</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,7 +61,6 @@
             <footer>
             </footer>
         </div>
-
     </form>
 </body>
 </html>

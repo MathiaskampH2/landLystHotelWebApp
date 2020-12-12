@@ -11,17 +11,5 @@ namespace landLystHotelWebApp
 
         public List<Features> roomFeatures { get; set; }
 
-        public override string ToString()
-        {
-            StringBuilder st = new StringBuilder();
-
-            foreach (Features roomFeature in roomFeatures)
-            {
-                st.AppendLine($"{RoomNum} :  {roomFeature.featureDescription}");
-            }
-
-            return st.ToString();
-        }
-
     }
 }

@@ -1,188 +1,227 @@
 ﻿<%@ Page Title="Reservation" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Reservation.aspx.cs" Inherits="landLystHotelWebApp.About" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <link rel="stylesheet" href="fonts/Reservation.css"/>
-    <div id="CustomerInformation" style="position: relative; left: 0px;">
-        <h1 id="customerHeadline">Customer information</h1>
-        <div id="firstNameLastName" style="position: relative; left: 0px;">
-            <table style="width: 350px;">
-                <tr>
-                    <th id="fNameID" style="width: 150px">First name</th>
-
-                    <th id="lNameID" style="width: 150px">Last name</th>
-                </tr>
-                <tr>
-                    <td id="fNameBoxID" style="width: 150px;">
-                        <asp:TextBox ID="fNameBox" runat="server"></asp:TextBox>
-                    </td>
-
-                    <td id="lNameBoxID" style="width: 150px">
-                        <asp:TextBox ID="lNameBox" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="zipcodeAddress" style="position: relative; left: 0px;">
-            <table style="width: 350px;">
-                <tr>
-                    <th id="zipcodeID" style="width: 150px">Zipcode</th>
-                    <th id="addressID" style="width: 150px">Address</th>
-                </tr>
-                <tr>
-                    <td id="zipcodeBoxID" style="width: 150px;">
-                        <asp:TextBox ID="zipcodeBox" runat="server"></asp:TextBox>
-                    </td>
-                    <td id="addressBoxID" style="width: 150px">
-                        <asp:TextBox ID="addressBox" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="emailPhoneNumber" style="position: relative; left: 0px;">
-            <table style="width: 350px;">
-                <tr>
-                    <th id="emailID" style="width: 150px">Email</th>
-                    <th id="phoneNumberID" style="width: 150px">Phone number</th>
-                </tr>
-                <tr>
-                    <td id="emailBoxID" style="width: 150px;">
-                        <asp:TextBox ID="emailBox" runat="server"></asp:TextBox>
-                    </td>
-                    <td id="phoneNumberBoxID" style="width: 150px">
-                        <asp:TextBox ID="phoneNumberBox" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br/>
-        <table style="width: 350px">
+    <link rel="stylesheet" href="Content/Reservation.css"/>
+<div class="CustomerInformation">
+    <h1>Customer information</h1>
+    <div>
+        <table>
             <tr>
-                <td id="createCustomer" style="width: 150px;">
-                    <asp:Button ID="CreateCustomerButID" runat="server" Text="create customer" OnClick="CreateCustomerButID_Click"/>
+                <th>First name</th>
+
+                <th>Last name</th>
+            </tr>
+            <tr>
+                <td>
+                    <asp:TextBox ID="fNameBox" runat="server"></asp:TextBox>
+                </td>
+
+                <td>
+                    <asp:TextBox ID="lNameBox" runat="server"></asp:TextBox>
                 </td>
             </tr>
         </table>
     </div>
-    <div id="reservationInformation" style="position: relative; left: 0px; top: 0px; height: 210px;">
-        <h1 id="reservationHeadline">Reservation information</h1><br/>
-        <h3 id="roomFeaturesHeadline">Room features</h3>
-        <p id="breadTextRoomServation">
-            The default price of a room is 695.- per night.<br/>
-            Below you see some room features that you can select<br/>
-            the selected room features price will be added to the default price of the room.<br/>
-        </p><br/>
-        <div id="roomFeaturesAndDatesID" style="position: relative; top: 0px; left: 0px; height: 355px;">
-            <table id="roomFeaturesTableID" style="width: 30%; float: left; height: 355px">
-                <tr>
-                    <th id="roomFeatureColumnID" style="width: 100px">Room feature</th>
-                    <th id="roomFeatureChekboxID" style="width: 50px"></th>
-                    <th id="rroomFeaturePriceID" style="width: 100px">Price</th>
-                </tr>
-                <tr id="balconyRow">
-                    <td id="balconyLabelID" style="width: 100px;">Balcony</td>
-                    <td id="balconyCheckboxID" style="width: 50px">
-                        <asp:CheckBox ID="balconyCheckbox" runat="server"/>
-                    </td>
-                    <td id="balconyPriceID" style="width: 100px">
-                        <asp:Label ID="balconyPriceLabel" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-                <tr id="doubleBedRow">
-                    <td id="doubleBedLabelID" style="width: 100px;">Double Bed</td>
-                    <td id="doubleBedCheckBoxID" style="width: 50px;">
-                        <asp:CheckBox ID="doubleBedCheckbox" runat="server"/>
-                    </td>
-                    <td id="doublebedPriceID" style="width: 100px">
-                        <asp:Label ID="doubleBedPriceLabel" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-                <tr id="bathtopRow">
-                    <td id="bathtopLabelID" style="width: 100px;">Bathtub</td>
-                    <td id="bathtopCheckBoxID" style="width: 50px;">
-                        <asp:CheckBox ID="bathtopCheckbox" runat="server"/>
-                    </td>
-                    <td id="BathtopPriceID" style="width: 100px">
-                        <asp:Label ID="bathtopPriceLabel" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-                <tr id="jacuzziRow">
-                    <td id="jacuzziLabelID" style="width: 100px;">Jacuzzi</td>
-                    <td id="jacuzziCheckBoxID" style="width: 50px;">
-                        <asp:CheckBox ID="jacuzziCheckbox" runat="server"/>
-                    </td>
-                    <td id="jacuzziPriceID" style="width: 100px">
-                        <asp:Label ID="jacuzziPriceLabel" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-                <tr id="kitchenRow">
-                    <td id="kitchenLabelID" style="width: 100px;">Kitchen</td>
-                    <td id="kitchenCheckBoxID" style="width: 50px;">
-                        <asp:CheckBox ID="kitchenCheckbox" runat="server"/>
-                    </td>
-                    <td id="kitchenPriceID" style="width: 100px">
-                        <asp:Label ID="kitchenPriceLabel" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-                <tr id="twoSingleBedsnRow">
-                    <td id="twoSingleBedsLabelID" style="width: 100px;">Two single beds</td>
-                    <td id="twoSIngleBedsCheckBoxID" style="width: 50px;">
-                        <asp:CheckBox ID="twoSingleBedsCheckbox" runat="server"/>
-                    </td>
-                    <td id="twoSingleBedsPriceID" style="width: 100px">
-                        <asp:Label ID="twoSingleBedsLabel" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-                <tr id="oneSingleBedsnRow">
-                    <td id="oneSingleBedsLabelID" style="width: 100px;">One single bed</td>
-                    <td id="oneSIngleBedsCheckBoxID" style="width: 50px;">
-                        <asp:CheckBox ID="oneSingleBedsCheckbox" runat="server"/>
-                    </td>
-                    <td id="oneSingleBedsPriceID" style="width: 100px">
-                        <asp:Label ID="oneSingleBedsLabel" runat="server" Text=""></asp:Label>
-                    </td>
-                </tr>
-            </table>
-            <div id="calenderCheckInCheckOut" style="width: 500px; height: 355px; float: left">
-                <table id="calenderTableID">
-                    <tr id="CalenderTableColumns">
-                        <th id="calenderCheckIn" style="width: 300px;">check in date</th>
-                        <th id="calenderCheckOut" style="width: 300px;">check out date</th>
-                    </tr>
-                    <tr id="calenders">
-                        <td id="calenderTableCheckInDate">
-                            <asp:Calendar ID="CalenderCheckInDate" runat="server" OnSelectionChanged="CalenderCheckInDate_SelectionChanged"></asp:Calendar><br/>
-                        </td>
-                        <td id="calenderTableCheckOutDate">
-                            <asp:Calendar ID="CalenderCheckOutDate" runat="server" OnSelectionChanged="CalenderCheckOutDate_SelectionChanged"></asp:Calendar><br/>
-                        </td>
-                    </tr>
-                </table>
-            </div><br/>
-        </div>
-        <div id="SearchTable" style="float: left">
-            <table id="searchForRoom" style="float : left;">
-                <th id="CheckIndate"> Check in date</th>
-                <th id="checkOutDate"> Check out date</th>
-                <tr>
-                    <td id="checkInDateChosenID">
-                        <asp:TextBox ID="CheckInDateChosenBox" runat="server"></asp:TextBox>
-                    </td>
-                    <td id="checkOutDateChosenID">
-                        <asp:TextBox ID="CheckOutDateChosenBox" runat="server"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Button ID="searchRoom" runat="server" Text="search" OnClick="searchRoom_Click"/>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="listOfRooms" style="float: left">
-            <asp:gridView runat="server" AutoGenerateColumns="False" ID="GridWithRooms">
-                <Columns>
-                    <asp:BoundField DataField="RoomNum" HeaderText="RoomNum"/>
-                </Columns>
-            </asp:gridView>
-        </div>
+    <div>
+        <table>
+            <tr>
+                <th>Zipcode</th>
+                <th>Address</th>
+            </tr>
+            <tr>
+                <td>
+                    <asp:TextBox ID="zipcodeBox" runat="server"></asp:TextBox>
+                </td>
+                <td>
+                    <asp:TextBox ID="addressBox" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+        </table>
     </div>
+    <div>
+        <table>
+            <tr>
+                <th>Email</th>
+                <th>Phone number</th>
+            </tr>
+            <tr>
+                <td>
+                    <asp:TextBox ID="emailBox" runat="server"></asp:TextBox>
+                </td>
+                <td>
+                    <asp:TextBox ID="phoneNumberBox" onkeypress="return integersOnly(this)" runat="server"></asp:TextBox>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br/>
+    <table>
+        <tr>
+            <td>
+                <asp:Button ID="CreateCustomerButID" runat="server" Text="create customer" OnClick="CreateCustomerButID_Click1"/>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="ReservationInformation">
+    <h1>Reservation information</h1>
+    <h3>Room features</h3>
+    <p>
+        The default price of a room is 695.- per night.<br/>
+        Below you see some room features that you can select.<br/>
+        the selected room features price will be added to the default price of the room.<br/>
+    </p>
+</div>
+<div class="RoomFeatures">
+    <table>
+        <tr>
+            <th>Room feature</th>
+            <th></th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td>Balcony</td>
+            <td>
+                <asp:CheckBox ID="balconyCheckbox" runat="server"/>
+            </td>
+            <td>
+                <asp:Label ID="balconyPriceLabel" runat="server" Text=""></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td>Double Bed</td>
+            <td>
+                <asp:CheckBox ID="doubleBedCheckbox" runat="server"/>
+            </td>
+            <td>
+                <asp:Label ID="doubleBedPriceLabel" runat="server" Text=""></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td>Bathtub</td>
+            <td>
+                <asp:CheckBox ID="bathtubCheckbox" runat="server"/>
+            </td>
+            <td>
+                <asp:Label ID="bathtopPriceLabel" runat="server" Text=""></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td>Jacuzzi</td>
+            <td>
+                <asp:CheckBox ID="jacuzziCheckbox" runat="server"/>
+            </td>
+            <td>
+                <asp:Label ID="jacuzziPriceLabel" runat="server" Text=""></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td>Kitchen</td>
+            <td>
+                <asp:CheckBox ID="kitchenCheckbox" runat="server"/>
+            </td>
+            <td>
+                <asp:Label ID="kitchenPriceLabel" runat="server" Text=""></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td>Two single beds</td>
+            <td>
+                <asp:CheckBox ID="twoSingleBedsCheckbox" runat="server"/>
+            </td>
+            <td>
+                <asp:Label ID="twoSingleBedsLabel" runat="server" Text=""></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td>One single bed</td>
+            <td>
+                <asp:CheckBox ID="oneSingleBedsCheckbox" runat="server"/>
+            </td>
+            <td>
+                <asp:Label ID="oneSingleBedsLabel" runat="server" Text=""></asp:Label>
+            </td>
+        </tr>
+    </table>
+</div>
+<br/>
+<div class="checkInDate">
+    <table>
+        <tr>
+            <th>Check in date</th>
+        </tr>
+        <tr>
+            <td>
+                <asp:TextBox ID="checkInBox" runat="server"></asp:TextBox>
+                <asp:ImageButton ID="checkInButtom" ImageUrl="images/calendar.png" ImageAlign="Bottom"
+                                 runat="server"/>
+                <ajaxToolkit:CalendarExtender ID="checkInCalender" PopupButtonID="checkInButtom" runat="server" TargetControlID="checkInBox"
+                                              Format="yyyy-MM-dd">
+                </ajaxToolkit:CalendarExtender>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="CheckOutDate">
+    <table>
+        <th>Check out date</th>
+        <tr>
+            <td>
+                <asp:TextBox ID="checkOutBox" runat="server"></asp:TextBox>
+                <asp:ImageButton ID="checkOutButtom" ImageUrl="images/calendar.png" ImageAlign="Bottom"
+                                 runat="server"/>
+                <ajaxToolkit:CalendarExtender ID="checkOutCalender" PopupButtonID="checkOutButtom" runat="server" TargetControlID="checkOutBox"
+                                              Format="yyyy-MM-dd">
+                </ajaxToolkit:CalendarExtender>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="SearchRoom">
+    <table>
+        <tr>
+            <th>search for room</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>
+                <br/><asp:Button ID="searchRoom" runat="server" Text="search" OnClick="searchRoom_Click"/>
+            </td>
+            <td>
+                <asp:ListBox ID="ListOfRooms" runat="server"></asp:ListBox>
+            </td>
+
+        </tr>
+
+    </table>
+    <table>
+        <tr>
+            <th>choose room</th>
+            <th>total price</th>
+        </tr>
+        <tr>
+            <td>
+                <asp:TextBox ID="ChooseRoomNumber" runat="server" OnTextChanged="ChooseRoomNumber_TextChanged" AutoPostBack="True"></asp:TextBox>
+            </td>
+            <td>
+                <asp:TextBox ID="TotalRoomPrice" runat="server" ReadOnly="True"></asp:TextBox>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="ReservationConfirmation">
+    <table>
+        <tr>
+            <td>
+                <asp:Button ID="confirmReservationButton" runat="server" Text="Confirm reservation" OnClick="confirmReservationButton_Click"/>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    function integersOnly(obj) {
+        obj.value = obj.value.replace(/[^0-9-.]/g, '');
+    }
+</script>
 </asp:Content>

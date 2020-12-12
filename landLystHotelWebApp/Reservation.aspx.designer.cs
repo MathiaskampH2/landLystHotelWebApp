@@ -114,13 +114,13 @@ namespace landLystHotelWebApp
         protected global::System.Web.UI.WebControls.Label doubleBedPriceLabel;
 
         /// <summary>
-        /// bathtopCheckbox control.
+        /// bathtubCheckbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox bathtopCheckbox;
+        protected global::System.Web.UI.WebControls.CheckBox bathtubCheckbox;
 
         /// <summary>
         /// bathtopPriceLabel control.
@@ -204,40 +204,58 @@ namespace landLystHotelWebApp
         protected global::System.Web.UI.WebControls.Label oneSingleBedsLabel;
 
         /// <summary>
-        /// CalenderCheckInDate control.
+        /// checkInBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalenderCheckInDate;
+        protected global::System.Web.UI.WebControls.TextBox checkInBox;
 
         /// <summary>
-        /// CalenderCheckOutDate control.
+        /// checkInButtom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar CalenderCheckOutDate;
+        protected global::System.Web.UI.WebControls.ImageButton checkInButtom;
 
         /// <summary>
-        /// CheckInDateChosenBox control.
+        /// checkInCalender control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CheckInDateChosenBox;
+        protected global::AjaxControlToolkit.CalendarExtender checkInCalender;
 
         /// <summary>
-        /// CheckOutDateChosenBox control.
+        /// checkOutBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CheckOutDateChosenBox;
+        protected global::System.Web.UI.WebControls.TextBox checkOutBox;
+
+        /// <summary>
+        /// checkOutButtom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton checkOutButtom;
+
+        /// <summary>
+        /// checkOutCalender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.CalendarExtender checkOutCalender;
 
         /// <summary>
         /// searchRoom control.
@@ -249,12 +267,39 @@ namespace landLystHotelWebApp
         protected global::System.Web.UI.WebControls.Button searchRoom;
 
         /// <summary>
-        /// GridWithRooms control.
+        /// ListOfRooms control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridWithRooms;
+        protected global::System.Web.UI.WebControls.ListBox ListOfRooms;
+
+        /// <summary>
+        /// ChooseRoomNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ChooseRoomNumber;
+
+        /// <summary>
+        /// TotalRoomPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TotalRoomPrice;
+
+        /// <summary>
+        /// confirmReservationButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button confirmReservationButton;
     }
 }
